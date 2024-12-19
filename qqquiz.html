@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .quiz-container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .question {
+            margin-bottom: 15px;
+        }
+        .question p {
+            font-weight: bold;
+            color: #444;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .error {
+            color: #d9534f;
+            font-style: italic;
+        }
+        .correct-answer {
+            color: #5cb85c;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Gaming Quiz</h1>
+        <form id="quizForm">
+            <div class="question">
+                <p>1. What is the name of the hero in "The Legend of Zelda" series?</p>
+                <input type="radio" name="q1" value="Link"> Link<br>
+                <input type="radio" name="q1" value="Zelda"> Zelda<br>
+                <input type="radio" name="q1" value="Ganondorf"> Ganondorf<br>
+            </div>
+            <div class="question">
+                <p>2. What is the best-selling video game of all time?</p>
+                <input type="radio" name="q2" value="Minecraft"> Minecraft<br>
+                <input type="radio" name="q2" value="Tetris"> Tetris<br>
+                <input type="radio" name="q2" value="GTA V"> GTA V<br>
+            </div>
+            <div class="question">
+                <p>3. In "Mario Kart", what item causes players to spin out?</p>
+                <input type="radio" name="q3" value="Banana"> Banana<br>
+                <input type="radio" name="q3" value="Mushroom"> Mushroom<br>
+                <input type="radio" name="q3" value="Star"> Star<br>
+            </div>
+            <div class="question">
+                <p>4. What is the main character's name in "Halo"?</p>
+                <input type="radio" name="q4" value="Master Chief"> Master Chief<br>
+                <input type="radio" name="q4" value="Cortana"> Cortana<br>
+                <input type="radio" name="q4" value="Arbiter"> Arbiter<br>
+            </div>
+            <div class="question">
+                <p>5. Which game features the fictional city of Los Santos?</p>
+                <input type="radio" name="q5" value="GTA V"> GTA V<br>
+                <input type="radio" name="q5" value="Cyberpunk 2077"> Cyberpunk 2077<br>
+                <input type="radio" name="q5" value="Watch Dogs"> Watch Dogs<br>
+            </div>
+            <div class="question">
+                <p>6. What year was the first "Call of Duty" game released?</p>
+                <input type="radio" name="q6" value="2003"> 2003<br>
+                <input type="radio" name="q6" value="2005"> 2005<br>
+                <input type="radio" name="q6" value="2007"> 2007<br>
+            </div>
+            <div class="question">
+                <p>7. What is the name of the first Pokémon game released?</p>
+                <input type="radio" name="q7" value="Red and Blue"> Pokémon Red and Blue<br>
+                <input type="radio" name="q7" value="Gold and Silver"> Pokémon Gold and Silver<br>
+                <input type="radio" name="q7" value="Ruby and Sapphire"> Pokémon Ruby and Sapphire<br>
+            </div>
+            <div class="question">
+                <p>8. In "Fortnite", what is the term for the shrinking play area?</p>
+                <input type="radio" name="q8" value="Storm"> Storm<br>
+                <input type="radio" name="q8" value="Zone"> Zone<br>
+                <input type="radio" name="q8" value="Circle"> Circle<br>
+            </div>
+            <div class="question">
+                <p>9. What is the name of the companion cube in "Portal"?</p>
+                <input type="radio" name="q9" value="Weighted Companion Cube"> Weighted Companion Cube<br>
+                <input type="radio" name="q9" value="Portal Cube"> Portal Cube<br>
+                <input type="radio" name="q9" value="Friend Cube"> Friend Cube<br>
+            </div>
+            <div class="question">
+                <p>10. Who is the creator of the "Metal Gear" series?</p>
+                <input type="radio" name="q10" value="Hideo Kojima"> Hideo Kojima<br>
+                <input type="radio" name="q10" value="Shigeru Miyamoto"> Shigeru Miyamoto<br>
+                <input type="radio" name="q10" value="Tetsuya Nomura"> Tetsuya Nomura<br>
+            </div>
+            <button type="button" onclick="checkAnswers()">Submit</button>
+        </form>
+        <div id="result"></div>
+    </div>
+    <script>
+        function checkAnswers() {
+            const answers = {
+                q1: 'Link',
+                q2: 'Minecraft',
+                q3: 'Banana',
+                q4: 'Master Chief',
+                q5: 'GTA V',
+                q6: '2003',
+                q7: 'Red and Blue',
+                q8: 'Storm',
+                q9: 'Weighted Companion Cube',
+                q10: 'Hideo Kojima'
+            };
+
+            let score = 0;
+            let total = Object.keys(answers).length;
+            let resultHTML = '';
+            let resultHTMLVrai = '';
+            let allAnswered = true;
+
+            for (let question in answers) {
+                const selected = document.querySelector(`input[name="${question}"]:checked`);
+                if (selected) {
+                    if (selected.value === answers[question]) {
+                        score++;
+                        resultHTMLVrai += `<p>Question ${question.substring(1)}: Correct</p>`;
+                    } else {
+                        resultHTMLVrai += `<p>Question ${question.substring(1)}: Incorrect - Correct answer is <span class="correct-answer">${answers[question]}</span></p>`;
+                    }
+                } else {
+                    allAnswered = false;
+                    resultHTML += `<p class="error">Question ${question.substring(1)}: You did not select an answer!</p>`;
+                }
+            }
+
+            const resultDiv = document.getElementById('result');
+            if (allAnswered) {
+                resultDiv.innerHTML = `<p>Your score: ${score} out of ${total}</p>` + resultHTMLVrai;
+            } else {
+                resultDiv.innerHTML = `<p class="error">Please answer all questions before submitting.</p>` + resultHTML;
+            }
+        }
+    </script>
+</body>
+</html>
